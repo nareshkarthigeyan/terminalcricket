@@ -13,6 +13,10 @@ public class MatchSimulator {
 
     static float firstInningScore = 0;
     static int firstInningWicket = 0;
+    static int target = 0;
+    static float secondInningScore = 0;
+    static int secondInningWicket = 0;
+
     static int balls = 0;
     static int wickets = 0;
 
@@ -26,9 +30,9 @@ public class MatchSimulator {
 
     static Random random = new Random();
 
-    public MatchSimulator(Player[] team1, Player[] team2) {
-        Team1 = team1;
-        Team2 = team2;
+    public MatchSimulator(Team team1, Team team2) {
+        Team1 = team1.playing11;
+        Team2 = team2.playing11;
     }
 
     void initInnings() {
@@ -108,19 +112,24 @@ public class MatchSimulator {
 
         if (batterRoll > bowlerRoll + 20) {
             batter.hit(6);
+            bowler.concedeRuns(6);
             bowler.bowl(false);
             return 6;
         } else if (batterRoll > bowlerRoll + 10) {
             batter.hit(4);
+            bowler.concedeRuns(4);
             bowler.bowl(false);
             return 4;
         } else if (batterRoll > bowlerRoll) {
             batter.hit(1);
+            bowler.concedeRuns(1);
             swapBatters();
             bowler.bowl(false);
             return 1;
         } else if (bowlerRoll > batterRoll + 15) {
+            batter.ballsFaced++;
             bowler.bowl(true);
+            bowler.takeWicket();
             handleWicket();
             return 0;
         } else {
@@ -147,8 +156,8 @@ public class MatchSimulator {
             for (int ball = 0; ball < 6; ball++) {
                 if (Striker == null) break;
 
-                // System.out.print("Press Enter for next ball...");
-                // scanner.nextLine();
+                System.out.print("Press Enter for next ball...");
+                scanner.nextLine();
 
                 firstInningScore += simulateBall(Striker, Bowler);
                 balls++;
@@ -162,6 +171,7 @@ public class MatchSimulator {
         }
 
         System.out.println("\n🏁 Innings Over");
+        target = (int) firstInningScore;
     }
 
     public void displayScoreboard() {
@@ -170,25 +180,23 @@ public class MatchSimulator {
             String mark = (p == Striker) ? "*" : "";
             System.out.printf("%-20s %3.0f (%2.0f balls) %s\n", p.name, p.runs, p.ballsFaced, mark);
         }
-
+    
         System.out.println("------------------------------------------------------");
-
-// int totalRuns = allBatters.stream().mapToInt(p -> (int)p.runs).sum();
-        // int totalBalls = allBatters.stream().mapToInt(p -> (int)p.ballsFaced).sum();
+    
         int overs = balls / 6;
         int ballsInOver = balls % 6;
-
+    
         int bowlerOversDone = (int)(Bowler.ballsBowled / 6);
         int bowlerBalls = (int)(Bowler.ballsBowled % 6);
-
-        System.out.printf("Bowler       : %-20s Overs: %d.%d  Dots: %.0f\n", 
-            Bowler.name, bowlerOversDone, bowlerBalls, Bowler.dotBallsBowled);
-
+    
+        System.out.printf("Bowler       : %-20s Overs: %d.%d  Runs: %.0f  Wkts: %d  Dots: %.0f\n", 
+            Bowler.name, bowlerOversDone, bowlerBalls, Bowler.runsConceded, Bowler.wicketsTaken, Bowler.dotBallsBowled);
+    
         System.out.println("------------------------------------------------------");
-
+    
         System.out.printf("TOTAL        : %d/%d  Overs: %d.%d\n", 
             (int) firstInningScore, firstInningWicket, overs, ballsInOver);
-
+    
         System.out.println("======================================================\n");
     }
 }

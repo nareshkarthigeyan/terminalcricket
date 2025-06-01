@@ -25,12 +25,25 @@ public class Player {
     float ballsFaced = 0;
     float runs = 0;
 
+    float runsConceded;
+    float totalRunsConceded;
+    int wicketsTaken;
+    int totalWicketsTaken;
+
     int centuries = 0;
     int halfCenturies = 0;
     int boundaries = 0;
 
     PlayerAttribute[] attributes = new PlayerAttribute[20];
     PlayerAttribute overallRating;
+
+    public void concedeRuns(int runs) {
+        this.runsConceded += runs;
+    }
+
+    public void takeWicket() {
+        this.wicketsTaken++;
+    }
 
     Player(String name, boolean isRightHanded){
         this.name = name;

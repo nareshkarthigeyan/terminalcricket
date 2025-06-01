@@ -2,13 +2,13 @@ public class Main {
     public static void main(String[] args) {
 
         Player[] CSK = {
-            new Player("MS Dhoni", true),
             new Player("Ruturaj Gaikwad", true),
             new Player("Devon Conway", true),
             new Player("Moeen Ali", true),
+            new Player("Ben Stokes", true),
             new Player("Shivam Dube", true),
             new Player("Ravindra Jadeja", true),
-            new Player("Ben Stokes", true),
+            new Player("MS Dhoni", true),
             new Player("Deepak Chahar", true),
             new Player("Maheesh Theekshana", true),
             new Player("Matheesha Pathirana", true),
@@ -23,13 +23,15 @@ public class Main {
             new Player("Cameron Green", true),
             new Player("Hardik Pandya", true),
             new Player("Tim David", true),
-            new Player("Piyush Chawla", true),
+            new Player("Krunal Pandya", true),
+            new Player("Kagiso Rabada", true),
             new Player("Jasprit Bumrah", true),
-            new Player("Jason Behrendorff", true),
-            new Player("Arjun Tendulkar", true)
+            new Player("Tim Boult", true)
         };
         // virat
-        MatchSimulator match = new MatchSimulator(CSK, MI);
+        Team csk = new Team("CSK", CSK);
+        Team mi = new Team("MI", MI);
+        MatchSimulator match = new MatchSimulator(csk, mi);
         match.initInnings();
         match.simulateOver();
         // System.out.println(result);
