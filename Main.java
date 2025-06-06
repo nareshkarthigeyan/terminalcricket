@@ -32,8 +32,7 @@ public class Main {
         Team csk = new Team("CSK", CSK);
         Team mi = new Team("MI", MI);
         MatchSimulator match = new MatchSimulator(csk, mi);
-        match.initInnings();
-        match.simulateOver();
+        match.simulateMatch();
         // System.out.println(result);
     }
 }

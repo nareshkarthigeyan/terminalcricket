@@ -12,7 +12,6 @@ public class Team {
     int wickets;
     float oversPlayed;
 
-    
 
     public Team(String name, Player[] players) {
         this.name = name;
